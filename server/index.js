@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-
+const conectarDB = require("./config/db");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -14,6 +14,13 @@ app.get("/api/health", (req, res) => {
   res.json({ mensaje: "Servidor ServiTrack funcionando" });
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en http://localhost:${PORT}`);
-});
+conectarDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`Servidor escuchando en http://localhost:${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("No se pudo iniciar el servidor:", error.message);
+    process.exit(1);
+  });
