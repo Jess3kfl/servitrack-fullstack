@@ -14,7 +14,7 @@ const login = async (req, res, next) => {
       return res.status(401).json({ mensaje: 'Credenciales inválidas' });
     }
 
-    const ok = await bcrypt.compare(password, usuario.password);
+    const ok = await bcrypt.compare(password, usuario.passwordHash);
     if (!ok) return res.status(401).json({ mensaje: 'Credenciales inválidas' });
 
     const token = jwt.sign(
