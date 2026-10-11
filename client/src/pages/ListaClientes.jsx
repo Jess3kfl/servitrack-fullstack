@@ -2,7 +2,7 @@ import "../css/listaclientes.css"
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FormCliente from "../components/FormCliente";
-
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 const ListaClientes = () => {
   const [clientes, setClientes] = useState([]);
   const [busqueda, setBusqueda] = useState("");
@@ -10,7 +10,7 @@ const ListaClientes = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/users")
+    fetch(`${API_URL}/clientes`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Error al obtener clientes");

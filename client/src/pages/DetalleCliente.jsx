@@ -1,7 +1,7 @@
 import '../css/detallecliente.css';
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001/api";
 const DetalleCliente = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const DetalleCliente = () => {
   const [mensaje, setMensaje] = useState("");
 
   useEffect(() => {
-    fetch(`https://fakestoreapi.com/users/${id}`)
+    fetch(`${API_URL}/clientes/${id}`)
       .then((res) => res.json())
       .then((data) => setCliente(data))
       .catch(() => setMensaje("Error al cargar los datos del cliente"));
@@ -21,7 +21,7 @@ const DetalleCliente = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const respuesta = await fetch(`http://localhost:3000/api/clientes/${id}`, {
+      const respuesta = await fetch(`${API_URL}/clientes/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
